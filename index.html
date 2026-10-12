@@ -839,7 +839,7 @@
       <div class="section-head">
         <div class="eyebrow">Chalo dekhte hain</div>
         <h2 class="section-title">Kitna Jaante Ho Mujhe?</h2>
-        <div class="section-note">Teeno sahi jawab do, aur ek inaam aapka 🎁</div>
+        <div class="section-note">Saare sahi jawab do, aur ek inaam aapka 🎁</div>
       </div>
       <div class="quiz-question">
         <p><span>01</span>Hamari perfect date night kya hogi, jab aap mere paas hoge?</p>
@@ -865,7 +865,31 @@
           <div class="quiz-option">Naughty lift and spin hug with kisses 😘💋</div>
         </div>
       </div>
-      <div class="quiz-progress" id="quizProgress">0 / 3 sahi</div>
+      <div class="quiz-question">
+        <p><span>04</span>Mera favourite colour kaun sa hai? 🎨</p>
+        <div class="quiz-options">
+          <div class="quiz-option" data-correct>Black 🖤</div>
+          <div class="quiz-option">Pink 🌸</div>
+          <div class="quiz-option">Red ❤️</div>
+        </div>
+      </div>
+      <div class="quiz-question">
+        <p><span>05</span>Aapke sath mera favourite time kaun sa hai? ⏰</p>
+        <div class="quiz-options">
+          <div class="quiz-option">Sath shopping karna 🛍️</div>
+          <div class="quiz-option">Sath long drive par jaana 🚗</div>
+          <div class="quiz-option" data-correct>Bas aapke sath hona, paas baithna, aapko dekhna aur baatein karna 🤍</div>
+        </div>
+      </div>
+      <div class="quiz-question">
+        <p><span>06</span>Mera favourite khana kya hai? 🍽️</p>
+        <div class="quiz-options">
+          <div class="quiz-option">Pizza 🍕</div>
+          <div class="quiz-option" data-correct>Biryani 🍛</div>
+          <div class="quiz-option">Burger 🍔</div>
+        </div>
+      </div>
+      <div class="quiz-progress" id="quizProgress">0 / 6 sahi</div>
       <div class="quiz-result" id="quizResult">
         Waah! Aap mujhe sach mein jaante ho 😍 Inaam mein ek tight hug aur bohat saara pyaar aapka hua 🤗💖
       </div>
@@ -1104,7 +1128,7 @@
             opt.classList.add('right');
             opt.innerHTML += ' ✓';
             solved++;
-            quizProgress.textContent = `${solved} / 3 sahi`;
+            quizProgress.textContent = `${solved} / ${questions.length} sahi`;
             burst(30, 25);
             if (solved === questions.length) {
               quizProgress.style.display = 'none';
