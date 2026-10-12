@@ -374,9 +374,9 @@
     /* ---------- Whispers (envelopes) ---------- */
     .whispers {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
-      max-width: 760px;
+      max-width: 880px;
       margin: 0 auto;
     }
     .whisper-card {
@@ -402,20 +402,81 @@
       color: #fff;
       border-color: var(--gold-light);
     }
+    .whisper-card .w-num {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .whisper-card.active .w-num { color: var(--gold-light); }
+    .whisper-card.read:not(.active)::after {
+      content: '✓';
+      position: absolute; top: 10px; right: 12px;
+      font-size: 0.8rem;
+      color: var(--rose);
+    }
     .whisper-reveal {
       margin: 26px auto 0;
-      max-width: 620px;
-      min-height: 84px;
-      padding: 22px 26px;
+      max-width: 680px;
+      min-height: 120px;
+      padding: 28px 30px;
       border-radius: 18px;
       text-align: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-style: italic;
       color: var(--wine);
       background: #fffdfb;
       border: 1px dashed var(--gold);
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .story-empty {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+    }
+    .story-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .story-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.3rem;
+      color: var(--rose);
+      line-height: 1.3;
+      margin: 2px 0 10px;
+    }
+    .story-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.32rem;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+    .story-next {
+      margin-top: 18px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--rose);
+      background: transparent;
+      color: var(--rose);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .story-next:hover { background: var(--rose); color: #fff; }
+    .story-end {
+      margin-top: 16px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
     }
     .whisper-reveal.pop { animation: pop 0.45s ease; }
     @keyframes pop { 0% { transform: scale(0.94); opacity: 0.3; } 100% { transform: scale(1); opacity: 1; } }
@@ -744,7 +805,7 @@
     <!-- Gallery -->
     <section class="section reveal">
       <div class="section-head">
-        <div class="eyebrow">Hamari kahani</div>
+        <div class="eyebrow">Yaadon ka album</div>
         <h2 class="section-title">Hamari Pyaari Yaadein</h2>
         <div class="section-note">Kisi bhi photo par click karke bara dekhiye 📸</div>
       </div>
@@ -791,12 +852,14 @@
     <!-- Whispers -->
     <section class="section reveal">
       <div class="section-head">
-        <div class="eyebrow">Shhh…</div>
-        <h2 class="section-title">Dil Ki Baatein</h2>
-        <div class="section-note">Har lifafa ek raaz hai, ek ek karke kholiye 💌</div>
+        <div class="eyebrow">Hamari kahani</div>
+        <h2 class="section-title">Shuru Se Ab Tak</h2>
+        <div class="section-note">Har lifafe mein hamari kahani ka ek hissa hai, pehle se shuru karke ek ek kholiye 💌</div>
       </div>
       <div class="whispers" id="whispers"></div>
-      <div class="whisper-reveal" id="whisperReveal">Koi bhi lifafa chuniye… 💭</div>
+      <div class="whisper-reveal" id="whisperReveal">
+        <div class="story-empty">Chapter 1 se shuru kijiye… 💭</div>
+      </div>
     </section>
 
     <!-- Quiz -->
@@ -1028,29 +1091,56 @@
     });
 
     // Whispers
-    const whispers = [
-      { icon: '🤫', label: 'Ek meetha raaz', text: "Lips pe soft kiss, eyes closed💕" },
-      { icon: '🤍', label: 'Paas aao na', text: "Kamr se tight pakad ke paas aao 🤍🌸" },
-      { icon: '✨', label: 'Meri pyaari khwahish', text: "Back hug from behind, slow sa squeeze 🤗" },
-      { icon: '👂', label: 'Shhh… kaan idhar laao', text: "Neck pe halka sa kiss… shhh✨" },
-      { icon: '🌙', label: 'Aaj raat ka plan', text: "Lips pr slow sa kiss or lower back dbao me slowly slowy 👀" },
-      { icon: '💗', label: 'Dil ki ek baat', text: "Cute or long hug sath forehead kiss😊" }
+    // Our story, chapter by chapter
+    const chapters = [
+      { icon: '🌱', label: 'Pehli Mulaqat',
+        text: "Yaad hai? Main aapke paas kaam karne aayi thi. Pehle din to aapne mujh se baat tak nahi ki thi 🙈 Sab kuch Anas ne samjhaya tha. Mujhe kya pata tha ke yahi khamosh sa insaan ek din meri poori duniya ban jayega." },
+      { icon: '🌸', label: 'Dheere Dheere',
+        text: "Phir jaise jaise waqt guzarta gaya, hum ek doosre se attach hote gaye. Aapki baatein, aapka izzat dene ka andaaz… sab kuch mujhe dheere dheere aapki taraf kheenchta chala gaya." },
+      { icon: '🤝', label: 'Aapka Haath',
+        text: "Aapka haath pakadna mujhe sab se acha lagta tha. Aapke sath main kabhi uncomfortable nahi hui, ek pal ke liye bhi nahi. Aapke paas aana mujhe hamesha khushi deta tha, aur aaj bhi deta hai." },
+      { icon: '🌧️', label: 'Woh Mushkil Waqt',
+        text: "Phir beech mein kuch aisa hua ke laga shayad main aapko hamesha ke liye kho dungi. Lekin mujh mein itni himmat hi nahi thi ke kabhi aap se door ja sakun. Pata nahi aapne kab aur kaise sab theek kar diya… bas itna jaanti hun ke aapne hamein sambhal liya 🤍" },
+      { icon: '🥺', label: 'Sorry, Meri Jaan',
+        text: "Meri wajah se aaj tak jitni bhi baaton se aap hurt huay, ya jo bhi aapko bura laga, us sab ke liye I am really, really sorry. Main kabhi nahi chahti ke aap meri wajah se udaas ho." },
+      { icon: '💝', label: 'Thank You',
+        text: "Itna saara pyaar dene ke liye, meri itni care karne ke liye, har ek cheez ke liye… thank you, Meri Jaan. Aap jaisa koi nahi." },
+      { icon: '😤', label: 'Gusse Ki Machine',
+        text: "Haan, gussa bhi bohat karte ho, poori gusse ki machine ho aap 😤 Gusse mein itna kuch bol jaate ho… chalo koi na, woh bhi aap hi ho, aur mujhe aap poore ke poore pasand ho 😌" },
+      { icon: '🤲', label: 'Meri Dua',
+        text: "Bas ek hi dua hai: hum hamesha sath rahein. Allah jaldi jaldi hamara nikah karwa de 🤲 Aur aap bas mere hi raho, hamesha. Love you soooo much, Meri Jaan 💖" }
     ];
     const whispersContainer = document.getElementById('whispers');
     const whisperReveal = document.getElementById('whisperReveal');
-    whispers.forEach(w => {
+    const cards = [];
+    function openChapter(i) {
+      const ch = chapters[i];
+      cards.forEach(c => c.classList.remove('active'));
+      cards[i].classList.add('active', 'read');
+      const next = i < chapters.length - 1
+        ? `<button class="story-next" type="button">Agla chapter: ${chapters[i + 1].label} →</button>`
+        : `<div class="story-end">— The End… nahi, abhi to bohat saari kahani baaki hai 💍</div>`;
+      whisperReveal.innerHTML = `
+        <div class="story-num">Chapter ${i + 1} / ${chapters.length}</div>
+        <div class="story-title">${ch.icon} ${ch.label}</div>
+        <p class="story-text">${ch.text}</p>
+        ${next}`;
+      const nb = whisperReveal.querySelector('.story-next');
+      if (nb) nb.addEventListener('click', () => openChapter(i + 1));
+      whisperReveal.classList.remove('pop');
+      void whisperReveal.offsetWidth;
+      whisperReveal.classList.add('pop');
+      burst(i === chapters.length - 1 ? 160 : 18, i === chapters.length - 1 ? 15 : 40);
+    }
+    chapters.forEach((ch, i) => {
       const card = document.createElement('button');
       card.className = 'whisper-card';
-      card.innerHTML = `<span class="w-icon">${w.icon}</span>${w.label}`;
+      card.innerHTML = `<span class="w-num">Chapter ${i + 1}</span><span class="w-icon">${ch.icon}</span>${ch.label}`;
       card.addEventListener('click', () => {
-        document.querySelectorAll('.whisper-card').forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-        whisperReveal.textContent = w.text;
-        whisperReveal.classList.remove('pop');
-        void whisperReveal.offsetWidth;
-        whisperReveal.classList.add('pop');
-        burst(18, 40);
+        openChapter(i);
+        if (window.innerWidth < 820) whisperReveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
+      cards.push(card);
       whispersContainer.appendChild(card);
     });
 
