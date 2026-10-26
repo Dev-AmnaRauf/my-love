@@ -934,7 +934,7 @@
         videoId: SONG_ID,
         playerVars: { playsinline: 1, rel: 0, loop: 1, playlist: SONG_ID },
         events: {
-          onReady: () => { ytReady = true; if (wantPlay) yt.playVideo(); },
+          onReady: () => { ytReady = true; if (wantPlay && !document.getElementById('intro').classList.contains('hide')) return; if (wantPlay) playSong(); },
           onStateChange: e => {
             if (e.data === YT.PlayerState.PLAYING) setPlaying(true);
             if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) setPlaying(false);
@@ -945,17 +945,28 @@
     function setPlaying(on) {
       playing = on;
       music.classList.toggle('paused', !on);
-      musicBtn.textContent = on ? '🔊' : '🔇';
-      musicBtn.setAttribute('aria-label', on ? 'Song band karein' : 'Song on karein');
+    }
+    // The icon follows what the viewer chose, so it shows "on" from the start
+    function showIcon() {
+      musicBtn.textContent = wantPlay ? '🔊' : '🔇';
+      musicBtn.setAttribute('aria-label', wantPlay ? 'Song band karein' : 'Song on karein');
     }
     function playSong() {
       wantPlay = true;
-      if (ytReady) yt.playVideo();
+      showIcon();
+      if (ytReady) { yt.unMute(); yt.setVolume(100); yt.playVideo(); }
     }
-    musicBtn.addEventListener('click', () => {
-      if (playing && ytReady) { wantPlay = false; yt.pauseVideo(); }
+    musicBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (wantPlay) { wantPlay = false; showIcon(); if (ytReady) yt.pauseVideo(); }
       else playSong();
     });
+    // If the phone blocked the first start, any tap on the page starts the song
+    document.addEventListener('pointerdown', () => {
+      if (wantPlay && !playing) playSong();
+    });
+    wantPlay = true;
+    showIcon();
 
     // Typewriter
     const messages = [
