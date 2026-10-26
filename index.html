@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Happy Birthday, Meri Jaan 💖</title>
+  <title>My Love 💖</title>
   <meta name="description" content="Ek chhota sa surprise, bohat saare pyaar ke sath" />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#4a0d24" />
@@ -767,9 +767,10 @@
       </div>
       <div class="letter">
         <p class="greet">Meri Jaan,</p>
-        <p>Aaj ka din bohat khaas hai, kyunki aaj woh insaan is duniya mein aaya jo meri poori duniya ban gaya. Aapke aane se meri zindagi mein rang aa gaye, meri baaton mein muskurahat aa gayi, aur mere dil ko sukoon mil gaya.</p>
-        <p>Aap meri har dua ka jawab ho. Jab aap muskuratay ho na, to lagta hai sab kuch theek hai. Aapka khayal rakhna, aapka pyaar se dekhna, aapki choti choti baatein… mujhe sab kuch bohat pasand hai.</p>
-        <p>Is saal aapki har khwahish poori ho, har din khushiyon se bhara ho, aur har qadam par main aapke sath rahun. Hamesha.</p>
+        <p>Aaj us insaan ki salgirah hai jo meri zindagi ka sab se khoobsurat hissa hai 🥹❤️ Aap sirf mere partner nahi ho, aap meri khushi, mera sukoon aur mera sab kuch ho. Is poori duniya mein mere dil ne sirf aapko chuna, aur agar hazaar zindagiyan bhi milein to har baar aapko hi chunungi 🫶🏻</p>
+        <p>Allah aapko dher saari khushiyan, achi sehat, kamyabi aur sukoon de. Aapka har khwab poora ho, har mushkil aasaan ho, aur Allah aapko har dukh aur har buri nazar se mehfooz rakhe. Ameen 🤲🏻🧿</p>
+        <p>Achay din hon ya mushkil, main hamesha aapke sath khari rahungi. Aap kabhi akelay nahi ho. Shukriya ke aap ho, aur shukriya un saari choti choti yaadon ke liye jo aapko pyaar karna itna khaas banati hain 🫂</p>
+        <p>Kal se zyada, aur aane wale kal se kam… I love you, mera shehzada, mera janeman, my life, my everything 💋 Happy Birthday, meri jaan 🎂♾️</p>
         <p class="sign">Hamesha aapki,<br>sirf aapki 🤍</p>
       </div>
     </section>
@@ -830,7 +831,7 @@
       </div>
       <div class="whispers" id="whispers"></div>
       <div class="whisper-reveal" id="whisperReveal">
-        <div class="story-empty">Chapter 1 se shuru kijiye… 💭</div>
+        <div class="story-empty">"Meri Jaan" se shuru kijiye… 💭</div>
       </div>
     </section>
 
@@ -1037,6 +1038,7 @@
 
     // Whispers
     // Our story, chapter by chapter
+    const chapterNames = ['Meri Jaan', 'Mera Shehzada', 'Mera Janeman', 'My Life', 'My Everything', 'My Partner', 'Mera Sukoon', 'Meri Duniya'];
     const chapters = [
       { icon: '🌱', label: 'Pehli Mulaqat',
         text: "Yaad hai? Main aapke paas kaam karne aayi thi. Pehle din to aapne mujh se baat tak nahi ki thi 🙈 Sab kuch Anas ne samjhaya tha. Mujhe kya pata tha ke yahi khamosh sa insaan ek din meri poori duniya ban jayega." },
@@ -1063,10 +1065,10 @@
       cards.forEach(c => c.classList.remove('active'));
       cards[i].classList.add('active', 'read');
       const next = i < chapters.length - 1
-        ? `<button class="story-next" type="button">Agla chapter: ${chapters[i + 1].label} →</button>`
+        ? `<button class="story-next" type="button">Aage: ${chapterNames[i + 1]} →</button>`
         : `<div class="story-end">— The End… nahi, abhi to bohat saari kahani baaki hai 💍</div>`;
       whisperReveal.innerHTML = `
-        <div class="story-num">Chapter ${i + 1} / ${chapters.length}</div>
+        <div class="story-num">${chapterNames[i]} 💗</div>
         <div class="story-title">${ch.icon} ${ch.label}</div>
         <p class="story-text">${ch.text}</p>
         ${next}`;
@@ -1080,7 +1082,7 @@
     chapters.forEach((ch, i) => {
       const card = document.createElement('button');
       card.className = 'whisper-card';
-      card.innerHTML = `<span class="w-num">Chapter ${i + 1}</span><span class="w-icon">${ch.icon}</span>${ch.label}`;
+      card.innerHTML = `<span class="w-num">${chapterNames[i]}</span><span class="w-icon">${ch.icon}</span>${ch.label}`;
       card.addEventListener('click', () => {
         openChapter(i);
         if (window.innerWidth < 820) whisperReveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
