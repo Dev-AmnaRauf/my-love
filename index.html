@@ -388,10 +388,11 @@
     }
     .music-player iframe { width: 100%; height: 100%; display: block; border: 0; }
     .music-btn {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 500;
-      font-size: 0.9rem;
-      padding: 10px 18px;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      line-height: 1;
+      padding: 0;
       color: #fff;
       background: linear-gradient(135deg, var(--rose), var(--wine-2));
       border: 1px solid rgba(236, 211, 155, 0.6);
@@ -854,7 +855,7 @@
   <!-- Music -->
   <div class="music paused" id="music">
     <div class="music-player"><div id="ytPlayer"></div></div>
-    <button class="music-btn" id="musicBtn" type="button">🎵 Fitratein chalaiye</button>
+    <button class="music-btn" id="musicBtn" type="button" aria-label="Song on karein">🔇</button>
   </div>
 
   <!-- Lightbox -->
@@ -944,7 +945,8 @@
     function setPlaying(on) {
       playing = on;
       music.classList.toggle('paused', !on);
-      musicBtn.textContent = on ? '⏸ Song rokiye' : '🎵 Fitratein chalaiye';
+      musicBtn.textContent = on ? '🔊' : '🔇';
+      musicBtn.setAttribute('aria-label', on ? 'Song band karein' : 'Song on karein');
     }
     function playSong() {
       wantPlay = true;
